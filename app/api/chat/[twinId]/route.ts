@@ -5,12 +5,13 @@ import path from 'path';
 
 // Initialize OpenAI client (compatible with Together AI)
 const openai = new OpenAI({
-  apiKey: process.env.TOGETHER_API_KEY,
+  apiKey: process.env.TOGETHER_API_KEY?.trim(),
   baseURL: 'https://api.together.xyz/v1',
 });
 
-const EMBEDDING_MODEL = 'togethercomputer/m2-bert-80M-8k-retrieval';
+const EMBEDDING_MODEL = 'togethercomputer/m2-bert-80M-2k-retrieval'; // Using all-MiniLM-L6-v2 compatible model
 const CHAT_MODEL = 'meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo';
+const TAVILY_API_KEY = process.env.TAVILY_API_KEY?.trim();
 
 export const dynamic = 'force-dynamic';
 
@@ -41,6 +42,52 @@ function cosineSimilarity(vecA: number[], vecB: number[]) {
   return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
 }
 
+async function searchWeb(query: string) {
+  if (!TAVILY_API_KEY) {
+    console.log('No Tavily API key configured, skipping web search');
+    return null;
+  }
+
+  try {
+    const response = await fetch('https://api.tavily.com/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        api_key: TAVILY_API_KEY,
+        query: query,
+        max_results: 5,
+        include_answer: true,
+        search_depth: 'basic',
+      }),
+    });
+
+    if (!response.ok) {
+      console.error('Tavily search failed:', response.statusText);
+      return null;
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Web search error:', error);
+    return null;
+  }
+}
+
+function shouldSearchWeb(query: string): boolean {
+  // Keywords that indicate current/recent information is needed
+  const currentInfoKeywords = [
+    'latest', 'recent', 'current', 'now', 'today', 'this week', 'this month',
+    'news', 'update', 'new', 'upcoming', '2025', '2024', 'what\'s happening',
+    'trending', 'just released', 'breaking'
+  ];
+
+  const lowerQuery = query.toLowerCase();
+  return currentInfoKeywords.some(keyword => lowerQuery.includes(keyword));
+}
+
 export async function POST(
   req: Request,
   { params }: { params: { twinId: string } }
@@ -61,7 +108,25 @@ export async function POST(
 
   const { metadata, knowledgeBase } = twinData;
 
-  // 1. Embed the user's query
+  // 1. Check if we should search the web for current information
+  let webSearchResults = '';
+  if (shouldSearchWeb(lastMessage.content)) {
+    console.log('Performing web search for:', lastMessage.content);
+    const searchData = await searchWeb(lastMessage.content);
+
+    if (searchData && searchData.results && searchData.results.length > 0) {
+      const searchSummaries = searchData.results
+        .slice(0, 3)
+        .map((result: any, idx: number) =>
+          `[${idx + 1}] ${result.title}: ${result.content}`
+        )
+        .join('\n\n');
+
+      webSearchResults = `\n\nCurrent web information:\n${searchSummaries}`;
+    }
+  }
+
+  // 2. Embed the user's query
   let embedding = null;
   try {
     const response = await openai.embeddings.create({
@@ -75,7 +140,7 @@ export async function POST(
     console.error("Embedding error:", error);
   }
 
-  // 2. Retrieve relevant chunks
+  // 3. Retrieve relevant chunks
   let contextString = "";
   if (embedding && knowledgeBase.length > 0) {
     const chunksWithScores = knowledgeBase.map((chunk: any) => ({
@@ -93,7 +158,7 @@ export async function POST(
     contextString = `\n\nContext from YouTube Channel:\n${context}`;
   }
 
-  // 3. Generate Answer
+  // 4. Generate Answer
   const systemPrompt = `You are ${metadata.title}, the YouTube creator speaking directly to your audience. Respond as yourself in first person, sharing your perspectives, ideas, and insights.
 
 Key instructions:
@@ -105,9 +170,10 @@ Key instructions:
 - Stay focused on the topics you discuss in your content
 - If asked to write code, create content, or do technical tasks, politely decline and redirect: "That's not really what I do - I focus on discussing ideas and perspectives about [your topic]. What would you like to know about that?"
 - If asked about something outside your expertise, say "That's not something I typically discuss" or "I haven't explored that topic in depth"
+- When current information from web search is available, you can reference it naturally to discuss recent developments, but always from your perspective and expertise
 
 Use the context below to inform your responses, but speak naturally from your perspective:
-${contextString}`;
+${contextString}${webSearchResults}`;
 
   const response = await openai.chat.completions.create({
     model: CHAT_MODEL,
