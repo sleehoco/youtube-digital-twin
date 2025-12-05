@@ -62,3 +62,4 @@ data/demo/
 
 .vercel
 .env*.local
+.claude/
