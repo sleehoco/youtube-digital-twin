@@ -1,0 +1,38 @@
+[
+  {
+    "id": "psychacks",
+    "name": "Orion Taraban",
+    "handle": "@psychacks",
+    "channelUrl": "https://www.youtube.com/@psychacks",
+    "avatar": "https://yt3.ggpht.com/q-3Z1ZHzikjseCjPbt2KlMxrpMytD3MqAeDE5yhbJXb-MpWiJwLLgf-rj0gH8lS-ZtKrUyg0Kw=s800-c-k-c0x00ffffff-no-rj",
+    "description": "Psychology insights and relationship advice",
+    "topics": ["Psychology", "Relationships", "Personal Development"],
+    "isActive": true,
+    "createdAt": "2025-12-02T00:00:00.000Z",
+    "updatedAt": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": "fireship",
+    "name": "Fireship",
+    "handle": "@Fireship",
+    "channelUrl": "https://www.youtube.com/c/Fireship",
+    "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kGRamAkhXY3NJ1dJDMh_UcToWkGEK8Ms_WpY_TyxUvBZI=s800-c-k-c0x00ffffff-no-rj",
+    "description": "High-intensity code tutorials and tech news",
+    "topics": ["Programming", "Web Development", "Tech News"],
+    "isActive": true,
+    "createdAt": "2025-12-03T00:00:00.000Z",
+    "updatedAt": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": "retail",
+    "name": "Retail Industry Analyst",
+    "handle": "@RetailAnalyst",
+    "channelUrl": "https://www.sec.gov",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=RA&backgroundColor=4f46e5",
+    "description": "AI assistant with deep knowledge of retail industry trends, financial performance, and competitive dynamics based on SEC filings from Walmart, Target, Costco, Home Depot, and Amazon",
+    "topics": ["Retail", "Finance", "Industry Analysis"],
+    "isActive": true,
+    "createdAt": "2025-12-04T00:00:00.000Z",
+    "updatedAt": "2025-12-04T00:00:00.000Z"
+  }
+]

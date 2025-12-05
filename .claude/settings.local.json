@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: YouTube Digital Twin with Docling integration\n\nFeatures:\n- YouTube transcript RAG chatbot using LLaMA 3.1 70B\n- Docling document converter (PDF/DOCX/PPTX to Markdown/JSON)\n- Batch document processing with parallel support\n- LLM training data preparation pipeline\n- Web UI for chat and document conversion\n- API endpoints for programmatic access\n- Complete documentation and guides\n\nTech stack:\n- Next.js 14 + TypeScript + Tailwind CSS\n- Python 3.12 + Docling + Together AI\n- RAG with embeddings and semantic search\n- YouTube transcript ingestion\n\n🤖 Generated with Claude Code\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

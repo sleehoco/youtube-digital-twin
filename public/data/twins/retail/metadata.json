@@ -1,0 +1,11 @@
+{
+  "channelId": "retail-industry",
+  "title": "Retail Industry Analyst",
+  "description": "AI assistant with deep knowledge of retail industry trends, financial performance, and competitive dynamics based on SEC filings from Walmart, Target, Costco, Home Depot, and Amazon.",
+  "customUrl": "@RetailAnalyst",
+  "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=RA&backgroundColor=4f46e5",
+  "statistics": {
+    "subscriberCount": "0",
+    "videoCount": "0"
+  }
+}

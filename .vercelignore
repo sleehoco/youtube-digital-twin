@@ -1,0 +1,26 @@
+# Vercel Ignore - Don't deploy these to Vercel
+
+# Python environment (not needed in production)
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Scripts (run locally only)
+scripts/
+
+# Local data processing
+data/uploads/
+data/demo/
+
+# Docling cache
+.cache/
+
+# Development
+.env.local
+.env.development
+
+# Python dependencies
+requirements.txt
