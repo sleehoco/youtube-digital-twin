@@ -1,0 +1,11 @@
+{
+  "channelId": "baltimore-county-bcstat",
+  "title": "Baltimore County Data Analyst",
+  "description": "AI assistant with deep knowledge of Baltimore County government data, including crime statistics, code enforcement, traffic stops, public health metrics, and data-driven governance initiatives from BCstat.",
+  "customUrl": "@BCstat",
+  "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=BC&backgroundColor=1e3a8a",
+  "statistics": {
+    "subscriberCount": "0",
+    "videoCount": "0"
+  }
+}
