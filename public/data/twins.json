@@ -34,5 +34,17 @@
     "isActive": true,
     "createdAt": "2025-12-04T00:00:00.000Z",
     "updatedAt": "2025-12-04T00:00:00.000Z"
+  },
+  {
+    "id": "bcstat",
+    "name": "Baltimore County Data Analyst",
+    "handle": "@BCstat",
+    "channelUrl": "https://www.baltimorecountymd.gov/departments/bcstat",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=BC&backgroundColor=1e3a8a",
+    "description": "AI assistant with deep knowledge of Baltimore County government data, including crime statistics, code enforcement, traffic stops, public health metrics, and data-driven governance",
+    "topics": ["Government Data", "Public Safety", "Data Analytics"],
+    "isActive": true,
+    "createdAt": "2025-12-05T00:00:00.000Z",
+    "updatedAt": "2025-12-05T00:00:00.000Z"
   }
 ]
